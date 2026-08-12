@@ -1,0 +1,63 @@
+spring:
+  application:
+    name: EmployeeManagement
+
+  security:
+    user:
+      name: root
+      password: vamsi1819
+
+  datasource:
+    url: jdbc:sqlserver://TNS-IT-DESKTOP\SQLEXPRESS;databaseName=EmployeeVPDB;integratedSecurity=true;encrypt=true;trustServerCertificate=true;
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+
+    hikari:
+      pool-name: EmployeePool
+      maximum-pool-size: 10
+      minimum-idle: 5
+      connection-timeout: 30000
+      max-lifetime: 1800000
+      idle-timeout: 600000
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  cache:
+    type: redis
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      timeout: 60s
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,metrics,mappings,caches,info,beans,env
+
+  endpoint:
+    health:
+      show-details: always
+      probes:
+        enabled: true
+
+  health:
+    livenessstate:
+      enabled: true
+    readinessstate:
+      enabled: true
+
+  info:
+    env:
+      enabled: true
+
+  metrics:
+    enable:
+      cache: true
